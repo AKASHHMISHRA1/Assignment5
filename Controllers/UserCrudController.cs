@@ -46,6 +46,7 @@ namespace Assignment5.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userService.GetByIdAsync(id);

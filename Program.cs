@@ -12,6 +12,13 @@ builder.Services.Configure<UsersDatabaseSetting>(
     builder.Configuration.GetSection("UsersDatabaseSetting"));
 builder.Services.AddSingleton<UserService>();
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("ReactJsDomain",
+        policy => policy.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        );
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +30,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("ReactJsDomain");
 app.UseAuthorization();
 
 app.MapControllers();
